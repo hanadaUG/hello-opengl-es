@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
     // 描画を担当するクラス
     private static GLSurfaceView.Renderer GLRender = new GLSurfaceView.Renderer() {
+        float red;
+        float amount = 0.01f;
         // 初期化時
         @Override
         public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
@@ -78,7 +80,11 @@ public class MainActivity extends AppCompatActivity {
 //            Log.d(TAG, "onDrawFrame() E");
             // 画面を塗り潰す色情報を指定する
             // RGBA(255, 0, 0, 255)
-            gl10.glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
+            gl10.glClearColor(red, 0.0f, 0.0f, 1.0f);
+
+            // r値を0〜1.0の範囲で変化させる
+            red += amount;
+            if (red <= 0 || red >= 1.0f) amount = -amount;
 
             // OpenGLでは、すべてのピクセル情報を保存する領域をバッファと呼びます
             // カラーバッファを塗り潰す（クリアする）
